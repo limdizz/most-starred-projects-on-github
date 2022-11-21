@@ -3,7 +3,7 @@ import requests
 from plotly import offline
 
 # Creating an API call and saving the response.
-url = 'https://api.github.com/search/repositories?q=language:vue&sort=stars'
+url = 'https://api.github.com/search/repositories?q=language:julia&sort=stars'
 headers = {'Accept': 'application/vnd.github.v3+json'}
 r = requests.get(url, headers=headers)
 print(f'Status code: {r.status_code}')
@@ -37,7 +37,7 @@ data = [{
     'opacity': 0.6,
 }]
 my_layout = {
-    'title': 'Most-Starred Vue Script Projects on GitHub',
+    'title': 'Most-Starred Julia Projects on GitHub',
     'titlefont': {'size': 28},
     'xaxis': {
         'title': 'Repository',
@@ -52,4 +52,4 @@ my_layout = {
 }
 
 fig = {'data': data, 'layout': my_layout}
-offline.plot(fig, filename='vue_repos.html')
+offline.plot(fig, filename='julia_repos.html')

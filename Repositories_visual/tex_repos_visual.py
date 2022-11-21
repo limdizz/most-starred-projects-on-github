@@ -37,7 +37,7 @@ data = [{
     'opacity': 0.6,
 }]
 my_layout = {
-    'title': 'Most-Starred TeX Script Projects on GitHub',
+    'title': 'Most-Starred TeX Projects on GitHub',
     'titlefont': {'size': 28},
     'xaxis': {
         'title': 'Repository',
