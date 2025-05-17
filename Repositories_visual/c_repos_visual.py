@@ -2,7 +2,7 @@ import requests
 import plotly.express as px
 
 # Creating an API call and saving the response.
-url = 'https://api.github.com/search/repositories?q=language:clojure&sort=stars'
+url = 'https://api.github.com/search/repositories?q=language:c&sort=stars'
 headers = {'Accept': 'application/vnd.github.v3+json'}
 r = requests.get(url, headers=headers)
 print(f'Status code: {r.status_code}')
