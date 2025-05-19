@@ -1,6 +1,5 @@
 import requests
-
-from plotly import offline
+import plotly.express as px
 
 # Creating an API call and saving the response.
 url = 'https://api.github.com/search/repositories?q=language:factor&sort=stars'
@@ -10,8 +9,10 @@ print(f'Status code: {r.status_code}')
 
 # Processing of results
 response_dict = r.json()
+print(f"Complete results: {not response_dict['incomplete_results']}")
+
 repo_dicts = response_dict['items']
-repo_links, stars, labels = [], [], []
+repo_links, stars, hover_texts = [], [], []
 for repo_dict in repo_dicts:
     repo_name = repo_dict['name']
     repo_url = repo_dict['html_url']
@@ -21,35 +22,13 @@ for repo_dict in repo_dicts:
 
     owner = repo_dict['owner']['login']
     description = repo_dict['description']
-    label = f'{owner}<br />{description}'
-    labels.append(label)
+    hover_text = f"{owner}<br />{description}"
+    hover_texts.append(hover_text)
 
 # Building a visualization
-data = [{
-    'type': 'bar',
-    'x': repo_links,
-    'y': stars,
-    'hovertext': labels,
-    'marker': {
-        'color': 'rgb(60, 100, 150)',
-        'line': {'width': 1.5, 'color': 'rgb(25, 25, 25)'}
-    },
-    'opacity': 0.6,
-}]
-my_layout = {
-    'title': 'Most-Starred Factor Projects on GitHub',
-    'titlefont': {'size': 28},
-    'xaxis': {
-        'title': 'Repository',
-        'titlefont': {'size': 24},
-        'tickfont': {'size': 14},
-    },
-    'yaxis': {
-        'title': 'Stars',
-        'titlefont': {'size': 24},
-        'tickfont': {'size': 14},
-    },
-}
-
-fig = {'data': data, 'layout': my_layout}
-offline.plot(fig, filename='facotr_repos.html')
+title = "Most-Starred Python Project on Github"
+labels = {'x': 'Repository', 'y': 'Stars'}
+fig = px.bar(x=repo_links, y=stars, title=title, labels=labels, hover_name=hover_texts)
+fig.update_layout(title_font_size=28, xaxis_title_font_size=20, yaxis_title_font_size=20)
+fig.update_traces(marker_color='SteelBlue', marker_opacity=0.6)
+fig.show()
